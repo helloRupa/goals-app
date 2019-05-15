@@ -5,3 +5,5 @@
 <%= render 'shared/errors' %>
 
 <%= render 'shared/user_form', user: @user %>
+
+<p>Already signed up? <%= link_to 'Log In!', new_session_url %></p>
