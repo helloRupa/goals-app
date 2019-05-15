@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>GoalApp</title>
+    <title>Goals App: <%= @title %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,6 +10,18 @@
   </head>
 
   <body>
+    <header>
+      <h1 class="logo">
+        <% logo_url = current_user ? users_url : new_session_url %>
+        <a href="<%= logo_url %>">Goals App</a>
+      </h1>
+      <nav>
+        <% if current_user %>
+          <%= link_to current_user.username, user_url(current_user) %>
+          <%= button_to 'Log Out', session_url(current_user), method: :delete %>
+        <% end %>
+      </nav>
+    </header>
     <%= yield %>
   </body>
 </html>

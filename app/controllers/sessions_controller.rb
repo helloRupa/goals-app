@@ -1,4 +1,7 @@
 class SessionsController < ApplicationController
+  before_action :already_logged_in, only: [:new, :create]
+  before_action :not_logged_in, only: [:destroy]
+
   def new
     @user = User.new
     render :new
@@ -11,6 +14,7 @@ class SessionsController < ApplicationController
       login_user!(@user)
       redirect_to user_url(@user)
     else
+      @user = User.new(username: params[:user][:username])
       flash[:errors] = 'Wrong username or password'
       render :new
     end

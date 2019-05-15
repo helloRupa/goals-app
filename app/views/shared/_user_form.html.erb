@@ -1,0 +1,20 @@
+<% action_url = controller_name == 'sessions' ? session_url : users_url %>
+<% btn_text = controller_name == 'sessions' ? 'Log In' : 'Register' %>
+
+<form action="<%= action_url %>" method="post">
+    <%= auth_form %>
+
+    <div>
+        <label for="username">Username</label>
+        <input type="text" id="username" name="user[username]" value="<%= user.username %>">
+    </div>
+
+    <div>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="user[password]">
+    </div>
+
+    <div>
+        <input type="submit" value="<%= btn_text %>">
+    </div>
+</form>
