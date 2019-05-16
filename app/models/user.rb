@@ -9,20 +9,18 @@ class User < ApplicationRecord
 
   has_many :goals
 
+  has_many :comments_from_users, 
+    as: :commentable,
+    class_name: 'Comment'
+
   has_many :comments
 
-  has_many :comments_from_users, 
-    as: :commentable, 
-    class_name: 'User', 
-    foreign_key: :id,
-    primary_key: :commentable_id
-
-  has_many :goal_comments,
+  has_many :commented_goals,
     through: :comments,
     source: :commentable,
     source_type: 'Goal'
 
-  has_many :user_comments,
+  has_many :commented_users,
     through: :comments,
     source: :commentable,
     source_type: 'User'
