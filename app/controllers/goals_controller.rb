@@ -1,4 +1,5 @@
 class GoalsController < ApplicationController
+  before_action :not_logged_in
 
   def new
     @goal = Goal.new
@@ -7,6 +8,7 @@ class GoalsController < ApplicationController
 
   def create
     @goal = Goal.new(goal_params)
+    @goal.user_id = current_user.id
 
     if @goal.save
       redirect_to goal_url(@goal)
@@ -29,7 +31,7 @@ class GoalsController < ApplicationController
   def edit
     @goal = Goal.find_by_id(params[:id])
 
-    if @goal
+    if @goal && @goal.user_id == current_user.id
       render :edit
     else
       redirect_to users_url
@@ -38,6 +40,7 @@ class GoalsController < ApplicationController
 
   def update
     @goal = Goal.find_by_id(params[:id])
+    return unless @goal.user_id == current_user.id
 
     if @goal.update_attributes(goal_params)
       redirect_to goal_url(@goal)
@@ -48,15 +51,16 @@ class GoalsController < ApplicationController
   end
 
   def destroy
-    @goal = Goal.find_by_id(params[:id])
-    user_id = @goal.user_id
-    @goal.destroy
+    goal = Goal.find_by_id(params[:id])
+    return unless goal.user_id == current_user.id
+    user_id = goal.user_id
+    goal.destroy
     redirect_to user_url(user_id)
   end
 
   private
 
   def goal_params
-    params.require(:goal).permit(:user_id, :private, :completed, :title, :body, :cheers)
+    params.require(:goal).permit(:private, :completed, :title, :body, :cheers)
   end
 end

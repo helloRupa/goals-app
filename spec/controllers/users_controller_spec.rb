@@ -1,4 +1,5 @@
 require 'rails_helper'
+require_relative '../support/shared_examples/controller_examples'
 
 RSpec.describe UsersController, type: :controller do
   def login

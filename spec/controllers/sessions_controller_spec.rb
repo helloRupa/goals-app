@@ -1,13 +1,9 @@
 require 'rails_helper'
+require_relative '../support/shared_examples/controller_examples'
 
 RSpec.describe SessionsController, type: :controller do
-  describe 'GET #new' do
-    it 'renders the new template successfully' do
-      get :new
-      expect(response).to have_http_status(200)
-      expect(response).to render_template(:new)
-    end
-  end
+
+  it_behaves_like 'new examples', User, :user
 
   def login_user(username, password)
     post :create, params: { user: { username: username, password: password } }

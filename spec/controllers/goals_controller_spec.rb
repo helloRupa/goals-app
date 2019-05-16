@@ -1,14 +1,12 @@
 require 'rails_helper'
+require_relative '../support/shared_examples/controller_examples'
+require_relative '../support/controller_helper'
 
 RSpec.describe GoalsController, type: :controller do
-  def clear_and_make_user
-    Goal.destroy_all
-    User.destroy_all
-    User.create(username: 'champ', password: 'password')
-  end
+  include ControllerHelper
 
-  def create_goal(user_id)
-    Goal.create(user_id: user_id, title: 'title', body: 'body')
+  before(:each) do
+    login_user
   end
 
   it_behaves_like 'new examples', Goal, :goal
@@ -16,7 +14,7 @@ RSpec.describe GoalsController, type: :controller do
   describe 'POST #create' do
     context 'with invalid params' do
       before(:each) do
-        post :create, params: { goal: { user_id: '5' } }
+        post :create, params: { goal: { title: nil } }
       end
 
       include_examples 'invalid create examples'
@@ -24,30 +22,23 @@ RSpec.describe GoalsController, type: :controller do
 
     context 'with valid params' do
       it 'redirects to the goal show page' do
-        user = clear_and_make_user
-        post :create, params: { goal: { user_id: user.id, title: 'title', body: 'body' } }
+        post :create, params: { goal: { title: 'title', body: 'body' } }
         expect(response).to redirect_to(goal_url(Goal.last))
       end
     end
   end
 
-  describe 'GET #show' do
-    before(:each) do
-      user = clear_and_make_user
-      create_goal(user.id)
-    end
+  before(:each) do
+    create_goal
+  end
 
+  describe 'GET #show' do
     include_examples "valid show examples", Goal
 
     it_behaves_like "invalid show examples"
   end
 
   describe 'GET #edit' do
-    before(:each) do
-      user = clear_and_make_user
-      create_goal(user.id)
-    end
-
     it 'renders the edit template successfully' do
       get :edit, params: { id: Goal.last.id }
       expect(response).to have_http_status(200)
@@ -63,11 +54,6 @@ RSpec.describe GoalsController, type: :controller do
   end
 
   describe 'PATCH #update' do
-    before(:each) do
-      user = clear_and_make_user
-      create_goal(user.id)
-    end
-
     context 'when update is successful' do
       it 'redirects to the goal\'s show page' do
         patch :update, params: { id: Goal.last.id, goal: { title: 'New Title', body: 'New Body' } }
@@ -90,11 +76,6 @@ RSpec.describe GoalsController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    before(:each) do
-      user = clear_and_make_user
-      create_goal(user.id)
-    end
-
     it 'removes the goal from the database' do
       goal_id = Goal.last.id
       delete :destroy, params: { id: goal_id }
