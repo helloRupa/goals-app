@@ -1,9 +1,8 @@
-# frozen_string_literal: true
-
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
   describe 'validations' do
+    subject { User.new(username: 'hi', password: '12345678') }
     it { should validate_presence_of(:username) }
     it { should validate_presence_of(:session_token) }
     it { should validate_presence_of(:cheers) }
@@ -11,6 +10,10 @@ RSpec.describe User, type: :model do
     it { should validate_uniqueness_of(:username) }
     it { should validate_uniqueness_of(:session_token) }
     it { should validate_length_of(:password).is_at_least(8) }
+  end
+
+  describe 'associations' do
+    it { should have_many(:goals) }
   end
 
   describe 'initialize' do
@@ -31,12 +34,8 @@ RSpec.describe User, type: :model do
   end
 
   describe 'instance methods' do
-    subject(:user) { User.new(username: 'jimmy') }
     password = 'password'
-
-    before(:each) do
-      user.password = password
-    end
+    subject(:user) { User.new(username: 'jimmy', password: password) }
 
     context '#password=(pw)' do
       it 'sets the password_digest to a string' do
@@ -96,6 +95,21 @@ RSpec.describe User, type: :model do
         u.save
         token = u.reset_session_token!
         expect(User.find_by_username('Beans').session_token).to eq(token)
+      end
+    end
+    
+    context '#cheer(goal)' do
+      let(:goal) { double('Goal', cheers: 0).as_null_object }
+
+      it 'reduces the user\'s cheers by 1' do
+        user_cheers = user.cheers
+        user.cheer(goal)
+        expect(user.cheers).to eq(user_cheers - 1)
+      end
+
+      it 'increases the goal\'s cheers by 1' do
+        user.cheer(goal)
+        expect(goal).to have_received(:cheers=).with(1)
       end
     end
   end

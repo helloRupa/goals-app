@@ -1,5 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe Goal, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'validations' do
+    # Cannot test presence or inclusion of booleans due to database behavior
+    # Presence of user_id not needed due to belongs_to assoc.
+    it { should validate_presence_of(:title) }
+    it { should validate_presence_of(:body) }
+    it { should validate_presence_of(:cheers) }
+  end
+
+  describe 'associations' do
+    it { should belong_to(:user) }
+  end
 end

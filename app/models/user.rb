@@ -7,6 +7,8 @@ class User < ApplicationRecord
 
   after_initialize :ensure_session_token
 
+  has_many :goals
+
   def password=(pw)
     @password = pw
     self.password_digest = BCrypt::Password.create(pw)
@@ -24,6 +26,12 @@ class User < ApplicationRecord
     self.session_token = self.class.generate_session_token
     self.save!
     self.session_token
+  end
+
+  def cheer(goal)
+    return unless self.cheers > 0
+    self.cheers -= 1
+    goal.cheers += 1
   end
 
   def self.generate_session_token
