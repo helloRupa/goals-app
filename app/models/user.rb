@@ -9,6 +9,24 @@ class User < ApplicationRecord
 
   has_many :goals
 
+  has_many :comments
+
+  has_many :comments_from_users, 
+    as: :commentable, 
+    class_name: 'User', 
+    foreign_key: :id,
+    primary_key: :commentable_id
+
+  has_many :goal_comments,
+    through: :comments,
+    source: :commentable,
+    source_type: 'Goal'
+
+  has_many :user_comments,
+    through: :comments,
+    source: :commentable,
+    source_type: 'User'
+
   def password=(pw)
     @password = pw
     self.password_digest = BCrypt::Password.create(pw)
