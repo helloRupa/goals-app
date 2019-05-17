@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   before_action :already_logged_in, only: [:new, :create]
 
   def index
+    @users = User.all.order(:username)
     render :index
   end
 

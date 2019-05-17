@@ -15,6 +15,11 @@ RSpec.describe UsersController, type: :controller do
 			get :index
 			expect(response).to have_http_status(200)
 			expect(response).to render_template(:index)
+    end
+    
+    it 'creates an instance variable of all users' do
+			get :index
+      expect(assigns(:users)).to respond_to(:length)
 		end
   end
 
