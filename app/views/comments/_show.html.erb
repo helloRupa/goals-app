@@ -1,5 +1,5 @@
 <% comments.each do |comment| %>
-    <div>
+    <div class="comment">
         <p><%= comment.body %></p>
         <p class="author"><%= link_to comment.user.username, user_url(comment.user) %></p>
     </div>     

@@ -2,7 +2,7 @@
 
 <h1>All Users</h1>
 
-<section>
+<section class="users">
     <% @users.each do |user| %>
         <div><%= link_to user.username, user_url(user) %></div>
     <% end %>

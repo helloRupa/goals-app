@@ -33,7 +33,7 @@ RSpec.shared_examples 'header and nav' do
   end
 
   scenario 'it includes a link to add a new goal' do
-    within(:css, 'nav') { click_on('+') }
+    within(:css, 'nav') { click_on('+ Goal') }
     expect(current_url).to eq(new_goal_url)
   end
 

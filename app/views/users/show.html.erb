@@ -1,10 +1,9 @@
 <% @title = @user.username %>
 
 <!-- User profile, including comments, cheers left -->
-<section id="comments">
+<section id="comments" class="comments">
     <h1><%= @user.username %> Profile</h1>
     <div>
-        <h2>Leave a Comment</h2>
         <%= render 'shared/errors' %>
         <%= render 'comments/form', comment_type: 'User', item_id: @user.id %>
     </div>
@@ -21,7 +20,7 @@
 
 <!--  User's goals, link to each, whether completed. Only display public or all if current_user -->
 <section id="goals">
-    <h2>Goals</h2>
+    <h1>Goals</h1>
     <% if @goals.empty? %>
         <p>This user hasn't set any goals yet.</p>
     <% else %>
