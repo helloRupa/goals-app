@@ -7,13 +7,16 @@ class User < ApplicationRecord
 
   after_initialize :ensure_session_token
 
-  has_many :goals
+  has_many :goals,
+    dependent: :destroy
 
   has_many :comments_from_users, 
     as: :commentable,
-    class_name: 'Comment'
+    class_name: 'Comment',
+    dependent: :destroy
 
-  has_many :comments
+  has_many :comments,
+    dependent: :destroy
 
   has_many :commented_goals,
     through: :comments,
