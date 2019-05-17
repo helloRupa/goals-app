@@ -23,7 +23,7 @@ class GoalsController < ApplicationController
     private_goal(@goal)
 
     if @goal
-      @comments = @goal.comments
+      @comments = @goal.comments.order(:created_at)
       render :show
     else
       redirect_to users_url
