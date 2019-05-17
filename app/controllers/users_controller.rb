@@ -29,7 +29,7 @@ class UsersController < ApplicationController
 
     if @user
       @comments = @user.comments_from_users.includes(:user)
-      @goals = @user.goals
+      @goals = @user.goals.order(:created_at)
       render :show
     else
       redirect_to users_url

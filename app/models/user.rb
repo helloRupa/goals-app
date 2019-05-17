@@ -48,6 +48,8 @@ class User < ApplicationRecord
     return unless self.cheers > 0
     self.cheers -= 1
     goal.cheers += 1
+    self.save!
+    goal.save!
   end
 
   def self.generate_session_token
