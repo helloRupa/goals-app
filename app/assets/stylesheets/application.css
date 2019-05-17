@@ -32,7 +32,9 @@ input,
 a,
 div,
 table,
-textarea {
+textarea,
+ul,
+li {
     margin: 0;
     padding: 0;
     background-color: transparent;
@@ -164,6 +166,10 @@ section div {
     margin: auto;
 }
 
+section p {
+    margin: 15px 0;
+}
+
 textarea {
     height: 100px;
 }
@@ -182,19 +188,15 @@ h2 {
 
 .comment p {
     margin: 0 0 10px 0;
+    text-align: left;
 }
 
-.author {
+p.author {
     text-align: right;
 }
 
-ul {
-    list-style: none;
-}
-
-li {
-    display: inline-block;
-    padding: 10px;
+.goals div {
+    width: 90%;
 }
 
 input[type="checkbox"] + label {
@@ -204,6 +206,71 @@ input[type="checkbox"] + label {
     vertical-align: baseline;
 }
 
+table .button_to {
+    margin: 0;
+}
+
+.goals input[type="submit"] {
+    color: #fff;
+    font-size: 0.8em;
+    width: auto;
+    margin: 0;
+}
+
+table {
+    margin: 15px auto;
+}
+
+th, td {
+    padding: 0 15px 15px 0;
+}
+
+.goals td:nth-of-type(1) {
+    display: block;
+    width: 100%;
+}
+
+.goals td:nth-of-type(2),
+.goals td:nth-of-type(3) {
+    display: inline-block;
+    width: 48%;
+    padding: 0 0 25px 0;
+}
+
+.goals td:nth-of-type(3) {
+    text-align: right;
+}
+
+.description h2 {
+    padding: 0;
+}
+
+.description p {
+    text-align: left;
+}
+
+.cheer-btn form {
+    margin-left: 15px;
+}
+
+.cheer-btn input[type="submit"] {
+    padding: 5px;
+}
+
+.buttons div {
+    display: inline-block;
+    width: 48%;
+    margin: 15px 0;
+}
+
+div.goals {
+    text-align: right;
+}
+
+div.buttons {
+    margin-top: 30px auto;
+}
+
 @media only screen and (min-width: 600px) {
     main {
         width: 60%;
@@ -211,5 +278,15 @@ input[type="checkbox"] + label {
 
     section div  {
         width: 70%;
+    }
+}
+
+@media only screen and (min-width: 800px) {
+    .goals td:nth-of-type(1), 
+    .goals td:nth-of-type(2),
+    .goals td:nth-of-type(3) {
+        display: table-cell;
+        width: auto;
+        padding: 0 15px 15px 0;
     }
 }

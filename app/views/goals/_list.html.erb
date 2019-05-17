@@ -1,15 +1,20 @@
 <div>
+    <table>
+    <tbody>
     <% goals.each do |goal| %>
         <% if goal.user_id == current_user.id || !goal.private %>
-            <ul>
-                <li><%= link_to goal.title, goal_url(goal) %></li>
-                <li>
+            <% title = goal.title.length <= 30 ? goal.title : goal.title[0..27] + '...' %>
+            <tr>
+                <td><%= link_to title, goal_url(goal) %></td>
+                <td>
                     <%= goal.completed ? "Complete" : "In Progress" %>
-                </li>
+                </td>
                 <% if current_user.id == goal.user_id %>
-                    <li><%= button_to 'Delete', goal_url(goal), method: :delete %></li>
+                    <td><%= button_to 'Delete', goal_url(goal), method: :delete %></td>
                 <% end %>
-            </ul>
+            </tr>
         <% end %>
     <% end %>
+    </tbody>
+    </table>
 </div>
