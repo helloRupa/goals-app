@@ -20,6 +20,7 @@ class GoalsController < ApplicationController
 
   def show
     @goal = Goal.find_by_id(params[:id])
+    private_goal(@goal)
 
     if @goal
       render :show
@@ -30,6 +31,7 @@ class GoalsController < ApplicationController
 
   def edit
     @goal = Goal.find_by_id(params[:id])
+    not_your_goal(@goal)
 
     if @goal && @goal.user_id == current_user.id
       render :edit
@@ -40,7 +42,7 @@ class GoalsController < ApplicationController
 
   def update
     @goal = Goal.find_by_id(params[:id])
-    return unless @goal.user_id == current_user.id
+    not_your_goal(@goal)
 
     if @goal.update_attributes(goal_params)
       redirect_to goal_url(@goal)
@@ -52,7 +54,7 @@ class GoalsController < ApplicationController
 
   def destroy
     goal = Goal.find_by_id(params[:id])
-    return unless goal.user_id == current_user.id
+    not_your_goal(goal)
     user_id = goal.user_id
     goal.destroy
     redirect_to user_url(user_id)
@@ -62,5 +64,15 @@ class GoalsController < ApplicationController
 
   def goal_params
     params.require(:goal).permit(:private, :completed, :title, :body, :cheers)
+  end
+
+  def not_your_goal(goal)
+    return if goal.user_id == current_user.id
+    redirect_to user_url(goal.user_id)
+  end
+
+  def private_goal(goal)
+    return unless goal.private && current_user.id != goal.user_id
+    redirect_to user_url(goal.user_id)
   end
 end

@@ -7,16 +7,15 @@ RSpec.shared_examples 'header and nav' do
   username = 'bunson'
 
   before(:all) do
-    register_as(username)
+    create_user(username)
   end
 
   before(:each) do
-    login_as(User.last)
-    visit users_url
+    login_as(User.find_by_username(username))
   end
 
   scenario 'it displays the app name' do
-    expect(page).to have_content('Goals App')
+    within(:css, 'header') { expect(page).to have_content('Goals App') }
   end
 
   scenario 'the logo is a link to the users page' do
@@ -26,10 +25,19 @@ RSpec.shared_examples 'header and nav' do
 
   scenario 'it includes a link to the user\'s show page' do
     within(:css, 'nav') { click_on(username) }
-    expect(current_url).to eq(user_url(User.last))
+    expect(current_url).to eq(user_url(User.find_by_username(username)))
   end
 
   scenario 'it includes a logout button' do
     expect(page).to have_button('Log Out')
+  end
+
+  scenario 'it includes a link to add a new goal' do
+    within(:css, 'nav') { click_on('+') }
+    expect(current_url).to eq(new_goal_url)
+  end
+
+  scenario 'their remaining cheers are displayed' do
+    expect(page).to have_content('Cheers:')
   end
 end

@@ -1,0 +1,13 @@
+<form action="<%= comments_url %>" method="post">
+    <%= auth_form %>
+    <input type="hidden" name="comment[commentable_type]" value="<%= comment_type %>">
+    <input type="hidden" name="comment[commentable_id]" value="<%= item_id %>">
+    <div>
+        <label for="comment">Comment</label>
+        <textarea id="comment" name="comment[body]" required></textarea>
+    </div>
+
+    <div>
+        <input type="submit" value="Submit">
+    </div>
+</form>

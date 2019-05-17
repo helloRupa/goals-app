@@ -1,0 +1,15 @@
+<div>
+    <% goals.each do |goal| %>
+        <% if goal.user_id == current_user.id || !goal.private %>
+            <ul>
+                <li><%= link_to goal.title, goal_url(goal) %></li>
+                <li>
+                    <%= goal.completed ? "Complete" : "In Progress" %>
+                </li>
+                <% if current_user.id == goal.user_id %>
+                    <li><%= button_to 'Delete', goal_url(goal), method: :delete %></li>
+                <% end %>
+            </ul>
+        <% end %>
+    <% end %>
+</div>

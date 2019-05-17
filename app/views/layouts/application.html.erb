@@ -17,10 +17,18 @@
       </h1>
       <nav>
         <% if current_user %>
+          <%= link_to '+', new_goal_url, class: 'add-goal' %>
           <%= link_to current_user.username, user_url(current_user) %>
           <%= button_to 'Log Out', session_url(current_user), method: :delete %>
         <% end %>
       </nav>
+      
+      <% if current_user %>
+        <div class="cheers">
+            Cheers: <%= current_user.cheers %>
+        </div>
+      <% end %>
+
     </header>
     <main>
       <%= yield %>

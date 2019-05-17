@@ -6,6 +6,10 @@ require_relative 'feature_examples'
 include FeatureHelper
 
 feature 'main navigation' do
+  before(:each) do
+    visit users_url
+  end
+  
   it_behaves_like 'header and nav'
 end
 

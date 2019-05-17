@@ -28,6 +28,8 @@ class UsersController < ApplicationController
     @user = User.find_by_id(params[:id])
 
     if @user
+      @comments = @user.comments_from_users.includes(:user)
+      @goals = @user.goals
       render :show
     else
       redirect_to users_url
