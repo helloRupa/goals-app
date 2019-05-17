@@ -23,6 +23,7 @@ class GoalsController < ApplicationController
     private_goal(@goal)
 
     if @goal
+      @comments = @goal.comments
       render :show
     else
       redirect_to users_url

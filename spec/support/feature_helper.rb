@@ -17,6 +17,17 @@ module FeatureHelper
     click_button 'Log Out'
   end
 
+  def leave_comment(text)
+    fill_in 'comment', with: text
+    click_button 'Submit'
+  end
+
+  def add_goal(title, body)
+    fill_in 'title', with: title
+    fill_in 'body', with: body
+    click_button 'Save'
+  end
+
   def create_user(username)
     User.create!(username: username, password: 'password')
   end

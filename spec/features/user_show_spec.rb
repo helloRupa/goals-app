@@ -72,11 +72,6 @@ feature 'user profile' do
   end
 
   feature 'when on any user page' do
-    def leave_comment(text)
-      fill_in 'comment', with: text
-      click_button 'Submit'
-    end
-
     before(:each) do
       visit user_url(User.first)
     end

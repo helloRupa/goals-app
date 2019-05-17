@@ -65,6 +65,13 @@ feature 'display goal' do
       within(:css, 'main') { expect(page).to have_content('Private') }
     end
 
+    scenario 'a user can leave a comment' do
+      comment_content = 'Look at this!'
+      leave_comment(comment_content)
+      visit goal_url(Goal.last)
+      within(:css, 'section#comments') { expect(page).to have_content(comment_content) }
+    end
+
     feature 'when viewing own goal' do
       scenario 'the Cheer button is not visible' do
         create_goal(user.id, 'My Private Incomplete Goal', true, true)
@@ -76,6 +83,18 @@ feature 'display goal' do
         create_goal(user.id, 'My Private Incomplete Goal', true, true)
         visit goal_url(Goal.last)
         expect(page).to have_link('Edit Goal')
+      end
+
+      scenario 'the Delete Goal button is visible' do
+        expect(page).to have_button('Delete Goal')
+      end
+
+      scenario 'clicking Delete Goal deletes the goal' do
+        create_goal(user.id, 'My Private Incomplete Goal', true, true)
+        id = Goal.last.id
+        visit goal_url(Goal.last)
+        click_button('Delete Goal')
+        expect(Goal.find_by_id(id)).to be_nil
       end
     end
 
@@ -92,6 +111,10 @@ feature 'display goal' do
 
       scenario 'the Edit Goal link is not visible' do
         expect(page).to_not have_link('Edit Goal')
+      end
+
+      scenario 'the Delete Goal button is not visible' do
+        expect(page).to_not have_button('Delete Goal')
       end
     end
   end
