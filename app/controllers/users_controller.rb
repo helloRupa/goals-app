@@ -28,8 +28,9 @@ class UsersController < ApplicationController
     @user = User.find_by_id(params[:id])
 
     if @user
-      @comments = @user.comments_from_users.includes(:user)
+      @comments = @user.comments_from_users.includes(:user).order(:created_at)
       @goals = @user.goals.order(:created_at)
+      @goals = @goals.where(private: false) unless same_user?(@user)
       render :show
     else
       redirect_to users_url
@@ -40,5 +41,9 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:username, :password)
+  end
+
+  def same_user?(user)
+    user.id == current_user.id
   end
 end
