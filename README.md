@@ -1,24 +1,16 @@
-# README
+# Goals App
+Ruby 2.5.1, Rails 5.2.3
+Create your own goals and see other users' goals
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Auth
+Every user must create an account before accessing the app. Only username and password are required.
 
-Things you may want to cover:
+## User Goals
+Add a title and description. Set goal to public or private, incomplete or complete.
+Goals can be edited and deleted by their creator.
 
-* Ruby version
+## Cheers
+Every user receives 20 cheers by default. A user can cheer another user's goal as many times as they like, but not their own goals.
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Comments
+Users can comment on user profiles and goals. Comments can be created, but not edited or deleted.
