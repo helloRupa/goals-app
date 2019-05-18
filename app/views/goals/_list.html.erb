@@ -2,18 +2,16 @@
     <table>
     <tbody>
     <% goals.each do |goal| %>
-        <% if goal.user_id == current_user.id || !goal.private %>
-            <% title = goal.title.length <= 30 ? goal.title : goal.title[0..27] + '...' %>
-            <tr>
-                <td><%= link_to title, goal_url(goal) %></td>
-                <td>
-                    <%= goal.completed ? "Complete" : "In Progress" %>
-                </td>
-                <% if current_user.id == goal.user_id %>
-                    <td><%= button_to 'Delete', goal_url(goal), method: :delete %></td>
-                <% end %>
-            </tr>
-        <% end %>
+        <% title = goal.title.length <= 30 ? goal.title : goal.title[0..27] + '...' %>
+        <tr>
+            <td><%= link_to title, goal_url(goal) %></td>
+            <td>
+                <%= goal.completed ? "Complete" : "In Progress" %>
+            </td>
+            <% if current_user.id == goal.user_id %>
+                <td><%= button_to 'Delete', goal_url(goal), method: :delete %></td>
+            <% end %>
+        </tr>
     <% end %>
     </tbody>
     </table>
