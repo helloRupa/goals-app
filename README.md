@@ -1,6 +1,8 @@
 # Goals App
 Ruby 2.5.1, Rails 5.2.3
+
 Visit: https://afternoon-peak-94194.herokuapp.com/
+
 Create your own goals and see other users' goals
 
 ## Auth
